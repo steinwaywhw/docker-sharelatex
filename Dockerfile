@@ -1,7 +1,5 @@
-FROM steinwaywhw/docker-texlive:baseimage
+FROM steinwaywhw/docker-texlive:latest
 MAINTAINER Steinway Wu "http://steinwaywu.com/"
-
-ENV HOME /root
 
 RUN apt-get update
 RUN apt-get install -y git build-essential curl python-software-properties zlib1g-dev zip unzip wget
@@ -15,8 +13,8 @@ WORKDIR /opt/nodejs
 RUN curl http://nodejs.org/dist/node-latest.tar.gz | tar xz --strip-components=1
 RUN ./configure --prefix=/opt/.npm
 RUN make install -j4
-#RUN curl https://www.npmjs.org/install.sh | sh
-RUN curl https://www.npmjs.org/install.sh | clean=yes sh
+RUN curl https://www.npmjs.org/install.sh | sh
+# OR curl https://www.npmjs.org/install.sh | clean=[yes/no] sh
 
 # Install Grunt 
 RUN npm install -g grunt-cli
@@ -43,8 +41,5 @@ WORKDIR /var/www/sharelatex
 
 RUN npm install
 RUN grunt install 
-RUN grunt deploy:files
-
-CMD ["/sbin/my_init"]
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
+RUN grunt deploy
+RUN /var/www/sharelatex/package/script/deploy.sh 
