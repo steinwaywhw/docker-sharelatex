@@ -1,6 +1,9 @@
 FROM steinwaywhw/docker-texlive:baseimage
 MAINTAINER Steinway Wu "http://steinwaywu.com/"
 
+ENV HOME /root
+CMD ["/sbin/my_init"]
+
 RUN apt-get update
 RUN apt-get install -y git build-essential curl python-software-properties zlib1g-dev zip unzip wget
 
@@ -41,4 +44,8 @@ WORKDIR /var/www/sharelatex
 RUN npm install
 RUN grunt install 
 RUN grunt deploy
-RUN /var/www/sharelatex/package/script/deploy.sh 
+RUN /var/www/sharelatex/package/scripts/deploy.sh 
+
+
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
