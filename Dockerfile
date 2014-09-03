@@ -15,8 +15,8 @@ WORKDIR /opt/nodejs
 RUN curl http://nodejs.org/dist/node-latest.tar.gz | tar xz --strip-components=1
 RUN ./configure --prefix=/opt/.npm
 RUN make install -j4
-RUN curl https://www.npmjs.org/install.sh | sh
-# OR curl https://www.npmjs.org/install.sh | clean=[yes/no] sh
+#RUN curl https://www.npmjs.org/install.sh | sh
+RUN curl https://www.npmjs.org/install.sh | clean=yes sh
 
 # Install Grunt 
 RUN npm install -g grunt-cli
